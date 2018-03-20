@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as pl
 
 # Openning the input file:
 f = open('input.txt')
@@ -35,17 +36,17 @@ def costFunction(X, y, Theta):
 	
 # Defining the Gradient Descendent function:
 def gradient(X, y, Theta, alpha, iters):
+	J = []
 	m = X.shape[0]
 	for i in range(1,iters):
 		y_hat = X.dot(Theta.T) # 67x1
 		error = (y_hat - y) # 67x1
 		error = error * X
 		error = np.sum(error,0)/m
-		print(error)
 		Theta = Theta -(alpha*error)
-	print(Theta, i)
-	print(costFunction(X, y, Theta))
-	return
+		J.append(costFunction(X, y, Theta))
+	print(J)
+	return Theta, J
 	
 print(costFunction(X, y, Theta))
 print(gradient(Xtrain, ytrain, Theta, 0.01, 1000))
