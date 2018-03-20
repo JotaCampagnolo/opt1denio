@@ -12,7 +12,7 @@ X = np.insert(X,0,1,axis=1) # setting the bias. (0 is row, 1 is column).
 print("X matrix shape:", X.shape[0], "x", X.shape[1])
 
 # Defining the Theta matrix (list):
-Theta = np.array([[0.0, 0.0]])
+Theta = np.array([[-175.0, 1.0]])
 print("Theta matrix shape:", Theta.shape[0], "x", Theta.shape[1])
 print("Theta.T matrix shape:", Theta.T.shape[0], "x", Theta.T.shape[1])
 
@@ -25,7 +25,6 @@ Xtrain = X[:train]
 Xtest = X[train:]
 ytrain = y[:train]
 ytest = y[train:]
-print(Xtrain.shape[1])
 
 # Defining the cost function:
 def costFunction(X, y, Theta):
@@ -33,7 +32,7 @@ def costFunction(X, y, Theta):
 	y_hat = X.dot(Theta.T) # if Theta is a list, you have to .T.
 	cost = np.sum((y_hat - y)**2)
 	return cost/(2*m)
-	
+
 # Defining the Gradient Descendent function:
 def gradient(X, y, Theta, alpha, iters):
 	J = []
@@ -46,7 +45,20 @@ def gradient(X, y, Theta, alpha, iters):
 		Theta = Theta -(alpha*error)
 		J.append(costFunction(X, y, Theta))
 	print(J)
-	return Theta, J
-	
-print(costFunction(X, y, Theta))
-print(gradient(Xtrain, ytrain, Theta, 0.01, 1000))
+	print(costFunction(Xtest, ytest, Theta))
+	return Theta, J[1:]
+
+print(ytrain)
+Theta, J = gradient(Xtrain, ytrain, Theta, 0.01, 2000)
+y_hat = Xtest.dot(Theta.T) # this is the prediction
+
+pl.title("Gradient Descendent")
+pl.ylabel("Profit")
+pl.xlabel("Feature")
+#pl.plot(Xtrain[:,1], '*') # this ignores the first column
+#pl.plot(ytrain, '*', color='red')
+#pl.plot(y_hat)
+#pl.plot(J)
+pl.plot(Xtest[:,1], ytest, '*')
+pl.plot(Xtest[:,1], y_hat)
+pl.show()
