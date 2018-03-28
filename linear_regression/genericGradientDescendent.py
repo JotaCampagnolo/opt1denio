@@ -87,15 +87,64 @@ def gradientDescendent(X, y, Theta, alpha, iters):
         Theta = Theta -(alpha*error)
         J.append(costFunction(X, y, Theta))
         print("      * Iteracao", i, "-> Theta:", Theta, "and Cost:", J[-1])
+    print()
     return Theta, J[1:]
 
 # MAIN:
 finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.01, 10000)
-y_hat = Xtest.dot(finalTheta.T)
+y_hat_train = Xtrain.dot(finalTheta.T)
+y_hat_test = Xtest.dot(finalTheta.T)
 
-pl.title("Gradient Descendent")
+# Print the Final Theta Values:
+print("[T] : Final Theta Values:")
+for i in range(0, len(finalTheta[0])):
+    print("      * The Theta", i, "found is", finalTheta[0][i])
+print()
+
+# Print the Final Cost:
+print("[C] : Final Cost:")
+print("      * Train Dataset", costFunction(Xtrain, ytrain, finalTheta))
+print("      * Test Dataset", costFunction(Xtest, ytest, finalTheta))
+
+# PLOTING FIGURE 01: Calculated Theta Values:
+pl.figure(num=1, figsize=(5,9))
+pl.get_current_fig_manager().window.wm_geometry("+25+50")
+pl.title("Gradient Descendent: Calculated Cost Values")
+pl.ylabel("Cost")
+pl.xlabel("Iteration Number")
+pl.plot(finalCost, color='green')
+
+# PLOTING FIGURE 02: Predicted Line for TRAIN DATASET:
+pl.figure(num=2, figsize=(5,4))
+pl.get_current_fig_manager().window.wm_geometry("+600+50")
+pl.title("Gradient Descendent: Predicted Line TRAIN")
 pl.ylabel("Profit")
-pl.xlabel("Feature")
-pl.plot(Xtest[:,1], ytest, '*')
-pl.plot(Xtest[:,1], y_hat)
+pl.xlabel("Feature Value")
+pl.plot(Xtrain[:,1], ytrain, '*', color='blue')
+pl.plot(Xtrain[:,1], y_hat_train, color='orange')
+# PLOTING FIGURE 03: Real Values with Predicted Values for TRAIN DATASET:
+pl.figure(num=3, figsize=(5,4))
+pl.get_current_fig_manager().window.wm_geometry("+600+550")
+pl.title("Gradient Descendent: Real vs Predicted Values TRAIN")
+pl.ylabel("Profit")
+pl.xlabel("Ordered Feature Number")
+pl.plot(ytrain, '*', color='blue')
+pl.plot(y_hat_train, color='orange')
+
+# PLOTING FIGURE 04: Predicted Line for TEST DATASET:
+pl.figure(num=4, figsize=(5,4))
+pl.get_current_fig_manager().window.wm_geometry("+1200+50")
+pl.title("Gradient Descendent: Predicted Line TEST")
+pl.ylabel("Profit")
+pl.xlabel("Feature Value")
+pl.plot(Xtest[:,1], ytest, '*', color='blue')
+pl.plot(Xtest[:,1], y_hat_test, color='green')
+# PLOTING FIGURE 05: Real Values with Predicted Values for TEST DATASET:
+pl.figure(num=5, figsize=(5,4))
+pl.get_current_fig_manager().window.wm_geometry("+1200+550")
+pl.title("Gradient Descendent: Real vs Predicted Values TEST")
+pl.ylabel("Profit")
+pl.xlabel("Ordered Feature Number")
+pl.plot(ytest, '*', color='blue')
+pl.plot(y_hat_test, color='green')
 pl.show()
