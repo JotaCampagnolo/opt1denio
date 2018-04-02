@@ -13,7 +13,7 @@ print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%\n")
 
 # Openning INPUT FILE:
-inputFILE = open('input.txt')
+inputFILE = open('wine_input.txt')
 inputDATA = inputFILE.readlines()
 print("[2] : Input FILE was successfully oppened!\n")
 
@@ -36,15 +36,27 @@ print("[5] : Data Matrices:")
 print("      * X shape:", X.shape, "rows/cols")
 print("      * y shape:", y.shape, "rows/cols\n")
 
+# Adding and Removing Features:
+X = np.delete(X, [0, 3, 9], axis=1)
+
+# Recollecting INPUT DATA dimensions:
+m = X.shape[0] # Samples Amount.
+d = X.shape[1] # Features Amount.
+print("[3] : Data New Dimensions:")
+print("      *", m, "samples.")
+print("      *", d, "features.\n")
+
 # Instanciation of Theta Matrix:
-Theta = np.array([[0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0]])
+Theta = np.zeros((1, d+1))
 print("[6] : Theta Matrix Values:")
 for i in range(0, len(Theta[0])):
     print("      * Theta", i, "inicialized as", Theta[0][i])
 print()
 
 # Discretizing DATA features:
-DX = X / (np.max(X, 0))
+den = np.max(X,0) - np.min(X,0)
+X = X - np.min(X,0)
+DX = X / den
 print("[7] : The X matrix was discretized with:")
 print("      * MAX value:", np.max(DX))
 print("      * MIN value:", np.min(DX))
@@ -86,7 +98,7 @@ def gradientDescendent(X, y, Theta, alpha, iters):
         error = np.sum(error,0)/m
         Theta = Theta -(alpha*error)
         J.append(costFunction(X, y, Theta))
-        print("      * Iteracao", i, "-> Theta:", Theta, "and Cost:", J[-1])
+        #print("      * Iteracao", i, "-> Theta:", Theta, "and Cost:", J[-1])
     print()
     return Theta, J[1:]
 
@@ -100,7 +112,7 @@ def RMSE(y, y_hat):
     return np.sqrt(MSE(y, y_hat))
 
 # MAIN:
-finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.01, 10000)
+finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.001, 10000)
 y_hat_train = Xtrain.dot(finalTheta.T)
 y_hat_test = Xtest.dot(finalTheta.T)
 

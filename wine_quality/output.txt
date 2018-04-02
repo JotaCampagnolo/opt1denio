@@ -1,0 +1,71 @@
+[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!
+
+[1] : Program Definitions:
+      * Labels Amount: 1
+      * Train Size: 70.0 %
+
+[2] : Input FILE was successfully oppened!
+
+[3] : Data Dimensions:
+      * 178 samples.
+      * 13 features.
+
+[4] : Definition of Train Samples Size:
+      * 124 samples
+
+[5] : Data Matrices:
+      * X shape: (178, 13) rows/cols
+      * y shape: (178, 1) rows/cols
+
+[3] : Data New Dimensions:
+      * 178 samples.
+      * 10 features.
+
+[6] : Theta Matrix Values:
+      * Theta 0 inicialized as 0.0
+      * Theta 1 inicialized as 0.0
+      * Theta 2 inicialized as 0.0
+      * Theta 3 inicialized as 0.0
+      * Theta 4 inicialized as 0.0
+      * Theta 5 inicialized as 0.0
+      * Theta 6 inicialized as 0.0
+      * Theta 7 inicialized as 0.0
+      * Theta 8 inicialized as 0.0
+      * Theta 9 inicialized as 0.0
+      * Theta 10 inicialized as 0.0
+
+[7] : The X matrix was discretized with:
+      * MAX value: 1.0
+      * MIN value: 0.0
+
+[8] : Data Matrices after Theta 0 column:
+      * X shape: (178, 11) rows/cols
+      * y shape: (178, 1) rows/cols
+
+[9] : Train and Test Data Matrices:
+      * Xtrain shape: (124, 11) rows/cols
+      * Xtest shape: (54, 11) rows/cols
+      * ytrain shape: (124, 1) rows/cols
+      * ytest shape: (54, 1) rows/cols
+
+[G] : Starting Gradient Descendent Function:
+
+[T] : Final Theta Values:
+      * The Theta 0 found is 193.87411138543277
+      * The Theta 1 found is 404.59307010290973
+      * The Theta 2 found is -17.024902953730276
+      * The Theta 3 found is -69.07679623142786
+      * The Theta 4 found is 177.61966390013453
+      * The Theta 5 found is 215.65729580053963
+      * The Theta 6 found is 200.0584987853891
+      * The Theta 7 found is -31.283646688681863
+      * The Theta 8 found is 250.23551603768428
+      * The Theta 9 found is 105.28249981381107
+      * The Theta 10 found is 123.01936238374934
+
+[C] : Final Cost:
+      * Train Dataset 25245.667176549836
+      * Test Dataset 13433.05861035213
+
+[C] : RMSE Final Cost:
+      * 163.9088686456723
