@@ -15,7 +15,7 @@ print("      * Train Size:", TRAIN_SIZE*100, "%")
 print("      * Print Gradient Descendent:", PRINT_GD, "%\n")
 
 # Openning INPUT FILE:
-inputFILE = open('wine_input.txt')
+inputFILE = open('admission_input.txt')
 inputDATA = inputFILE.readlines()
 print("[2] : Input FILE was successfully oppened!\n")
 
@@ -39,7 +39,7 @@ print("      * X shape:", X.shape, "rows/cols")
 print("      * y shape:", y.shape, "rows/cols\n")
 
 # Adding and Removing Features:
-X = np.delete(X, [0, 3, 9], axis=1)
+# X = np.delete(X, [0, 3, 9], axis=1)
 
 # Recollecting INPUT DATA dimensions:
 m = X.shape[0] # Samples Amount.
@@ -139,46 +139,9 @@ print()
 print("[C] : RMSE Final Cost:")
 print("      *", RMSE(ytest, y_hat_test))
 
-if d < 2:
-    # PLOTING FIGURE 01: Calculated Theta Values:
-    pl.figure(num=1, figsize=(5,9))
-    pl.get_current_fig_manager().window.wm_geometry("+25+50")
-    pl.title("Gradient Descendent: Calculated Cost Values")
-    pl.ylabel("Cost")
-    pl.xlabel("Iteration Number")
-    pl.plot(finalCost, color='green')
-
-    # PLOTING FIGURE 02: Predicted Line for TRAIN DATASET:
-    pl.figure(num=2, figsize=(5,4))
-    pl.get_current_fig_manager().window.wm_geometry("+600+50")
-    pl.title("Gradient Descendent: Predicted Line TRAIN")
-    pl.ylabel("Profit")
-    pl.xlabel("Feature Value")
-    pl.plot(Xtrain[:,1], ytrain, '*', color='blue')
-    pl.plot(Xtrain[:,1], y_hat_train, color='orange')
-    # PLOTING FIGURE 03: Real Values with Predicted Values for TRAIN DATASET:
-    pl.figure(num=3, figsize=(5,4))
-    pl.get_current_fig_manager().window.wm_geometry("+600+550")
-    pl.title("Gradient Descendent: Real vs Predicted Values TRAIN")
-    pl.ylabel("Profit")
-    pl.xlabel("Ordered Feature Number")
-    pl.plot(ytrain, '*', color='blue')
-    pl.plot(y_hat_train, color='orange')
-
-    # PLOTING FIGURE 04: Predicted Line for TEST DATASET:
-    pl.figure(num=4, figsize=(5,4))
-    pl.get_current_fig_manager().window.wm_geometry("+1200+50")
-    pl.title("Gradient Descendent: Predicted Line TEST")
-    pl.ylabel("Profit")
-    pl.xlabel("Feature Value")
-    pl.plot(Xtest[:,1], ytest, '*', color='blue')
-    pl.plot(Xtest[:,1], y_hat_test, color='green')
-    # PLOTING FIGURE 05: Real Values with Predicted Values for TEST DATASET:
-    pl.figure(num=5, figsize=(5,4))
-    pl.get_current_fig_manager().window.wm_geometry("+1200+550")
-    pl.title("Gradient Descendent: Real vs Predicted Values TEST")
-    pl.ylabel("Profit")
-    pl.xlabel("Ordered Feature Number")
-    pl.plot(ytest, '*', color='blue')
-    pl.plot(y_hat_test, color='green')
-    pl.show()
+# Ploting the Classification:
+pos = (y==1).ravel()
+neg = (y==0).ravel()
+pl.plot(X[pos,0], X[pos,1], 'x', color='red')
+pl.plot(X[neg,0], X[neg,1], 'o', color='blue')
+pl.show()

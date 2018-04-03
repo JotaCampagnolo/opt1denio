@@ -8,9 +8,11 @@ print("[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!\n")
 # Program Definitions:
 LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
+PRINT_GD = True
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
-print("      * Train Size:", TRAIN_SIZE*100, "%\n")
+print("      * Train Size:", TRAIN_SIZE*100, "%")
+print("      * Print Gradient Descendent:", PRINT_GD, "%\n")
 
 # Openning INPUT FILE:
 inputFILE = open('input.txt')
@@ -37,7 +39,7 @@ print("      * X shape:", X.shape, "rows/cols")
 print("      * y shape:", y.shape, "rows/cols\n")
 
 # Instanciation of Theta Matrix:
-Theta = np.array([[0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, 0.0]])
+Theta = np.zeros((1, d+1))
 print("[6] : Theta Matrix Values:")
 for i in range(0, len(Theta[0])):
     print("      * Theta", i, "inicialized as", Theta[0][i])
@@ -86,7 +88,8 @@ def gradientDescendent(X, y, Theta, alpha, iters):
         error = np.sum(error,0)/m
         Theta = Theta -(alpha*error)
         J.append(costFunction(X, y, Theta))
-        print("      * Iteracao", i, "-> Theta:", Theta, "and Cost:", J[-1])
+        if PRINT_GD:
+            print("      * Iteracao", i, "-> Theta:", Theta, "and Cost:", J[-1])
     print()
     return Theta, J[1:]
 
@@ -99,7 +102,7 @@ def MSE(y, y_hat):
 def RMSE(y, y_hat):
     return np.sqrt(MSE(y, y_hat))
 
-# MAIN:
+# MAIN is from here to the end:
 finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.01, 10000)
 y_hat_train = Xtrain.dot(finalTheta.T)
 y_hat_test = Xtest.dot(finalTheta.T)

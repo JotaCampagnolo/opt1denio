@@ -1,0 +1,58 @@
+[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!
+
+[1] : Program Definitions:
+      * Labels Amount: 1
+      * Train Size: 70.0 %
+      * Print Gradient Descendent: False %
+
+[2] : Input FILE was successfully oppened!
+
+[3] : Data Dimensions:
+      * 100 samples.
+      * 2 features.
+
+[4] : Definition of Train Samples Size:
+      * 70 samples
+
+[5] : Data Matrices:
+      * X shape: (100, 2) rows/cols
+      * y shape: (100, 1) rows/cols
+
+[6] : Data New Dimensions:
+      * 100 samples.
+      * 2 features.
+
+[7] : Theta Matrix Values:
+      * Theta 0 inicialized as 0.0
+      * Theta 1 inicialized as 0.0
+      * Theta 2 inicialized as 0.0
+
+[8] : The X matrix was discretized with:
+      * MAX value: 1.0
+      * MIN value: 0.0
+
+[9] : Data Matrices after Theta 0 column:
+      * X shape: (100, 3) rows/cols
+      * y shape: (100, 1) rows/cols
+
+[10] : Train and Test Data Matrices:
+      * Xtrain shape: (70, 3) rows/cols
+      * Xtest shape: (30, 3) rows/cols
+      * ytrain shape: (70, 1) rows/cols
+      * ytest shape: (30, 1) rows/cols
+
+[G] : Starting Gradient Descendent Function:
+
+[T] : Final Theta Values:
+      * The Theta 0 found is 0.03753922369059761
+      * The Theta 1 found is 0.5795595416476774
+      * The Theta 2 found is 0.4499841191008945
+
+[C] : Final Cost:
+      * Train Dataset 0.06634292195646176
+      * Test Dataset 0.060505478069673053
+
+[C] : RMSE Final Cost:
+      * 0.3478662906050917
+(100, 2)
+(100, 1)
