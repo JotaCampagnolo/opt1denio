@@ -8,7 +8,7 @@ print("[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!\n")
 # Program Definitions:
 LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
-PRINT_GD = False # Print the Gradient Descendent steps?
+PRINT_GD = True # Print the Gradient Descendent steps?
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
@@ -83,14 +83,18 @@ print("      * ytest shape:", ytest.shape, "rows/cols\n")
 
 # Defining the Y_HAT function:
 def get_y_hat(X, Theta):
-    return X.dot(Theta.T)
+    return X.dot(Theta.T) # Once Theta is a list, you have to translate the Theta matrix.
+
+# Defining Signoid function:
+def signoid(X, Theta):
+    return np.round(1 / (1 + (np.e**(-X.dot(Theta.T)))))
 
 # Defining the Cost Function:
 def costFunction(X, y, Theta):
-	m = X.shape[0] # Amount of Samples in this Dataset.
-	y_hat = get_y_hat(X, Theta) # Once Theta is a list, you have to translate the Theta matrix.
-	cost = np.sum((y_hat - y)**2)
-	return cost/(2*m)
+    m = X.shape[0] # Amount of Samples in this Dataset.
+    y_hat = signoid(X, Theta)
+    cost = np.sum(y * np.log(y_hat) + (1 - y) * np.log(y_hat))
+    return -cost/m
 
 # Defining the Gradient Descendent function:
 def gradientDescendent(X, y, Theta, alpha, iters):
@@ -140,8 +144,8 @@ print("[C] : RMSE Final Cost:")
 print("      *", RMSE(ytest, y_hat_test))
 
 # Ploting the Classification:
-pos = (y==1).ravel()
-neg = (y==0).ravel()
-pl.plot(X[pos,0], X[pos,1], 'x', color='red')
-pl.plot(X[neg,0], X[neg,1], 'o', color='blue')
+pos = (np.round(y_hat_train)==1).ravel()
+neg = (np.round(y_hat_train)==0).ravel()
+pl.plot(Xtrain[pos,1], Xtrain[pos,2], 'x', color='red')
+pl.plot(Xtrain[neg,1], Xtrain[neg,2], 'o', color='blue')
 pl.show()
