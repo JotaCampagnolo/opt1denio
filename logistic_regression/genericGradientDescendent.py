@@ -8,7 +8,8 @@ print("[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!\n")
 # Program Definitions:
 LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
-PRINT_GD = False # Print the Gradient Descendent steps?
+PRINT_GD = True # Print the Gradient Descendent steps?
+PRINT_PS = True # Print the Predictions Samples comparation?
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
@@ -59,7 +60,7 @@ print()
 den = np.max(X,0) - np.min(X,0)
 X = X - np.min(X,0)
 DX = X / den
-print("[8] : The X matrix was discretized with:")
+print("[8] : The X matrix was normalized with:")
 print("      * MAX value:", np.max(DX))
 print("      * MIN value:", np.min(DX))
 print()
@@ -125,6 +126,8 @@ def RMSE(y, y_hat):
 finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.001, 10000)
 y_hat_train = get_y_hat(Xtrain, finalTheta)
 y_hat_test = get_y_hat(Xtest, finalTheta)
+notequaltrain = (np.round(y_hat_train) != ytrain).ravel()
+notequaltest = (np.round(y_hat_test) != ytest).ravel()
 
 # Print the Final Theta Values:
 print("[T] : Final Theta Values:")
@@ -142,19 +145,53 @@ print()
 print("[C] : RMSE Final Cost:")
 print("      *", RMSE(ytest, y_hat_test), "\n")
 
-# Print the Predictions:
-print("[P] : Predictions:")
+# Print the Predictions of TRAIN dataset:
+print("[P] : Train Predictions:")
+print("      * Prediction Accuracy: " + str(np.mean(np.round(y_hat_train)==ytrain)*100) + "%")
+if PRINT_PS:
+    parrays = np.column_stack((np.round(y_hat_train),ytrain))
+    for i in range(0, len(parrays)):
+        if notequaltrain[i]:
+            wrongstr = "<-- Wrong Prediction"
+        else:
+            wrongstr = ""
+        print("      *", i+1, "samples:", parrays[i], wrongstr)
+    print()
+
+# Print the Predictions of TEST dataset:
+print("[P] : Test Predictions:")
 print("      * Prediction Accuracy: " + str(np.mean(np.round(y_hat_test)==ytest)*100) + "%")
-parrays = np.column_stack((np.round(y_hat_test),ytest))
-for i in range(0, len(parrays)):
-    print("      *", i+1, "samples:", parrays[i])
+if PRINT_PS:
+    parrays = np.column_stack((np.round(y_hat_test),ytest))
+    for i in range(0, len(parrays)):
+        if notequaltest[i]:
+            wrongstr = "<-- Wrong Prediction"
+        else:
+            wrongstr = ""
+        print("      *", i+1, "samples:", parrays[i], wrongstr)
 
 
-# Ploting the Classification:
+# Ploting the Classification of TRAIN dataset:
+pos = (np.round(y_hat_train)==1).ravel()
+neg = (np.round(y_hat_train)==0).ravel()
+pl.figure(num=1, figsize=(7,7))
+pl.get_current_fig_manager().window.wm_geometry("+50+50")
+pl.title("Logistic Regression with Gradient Descendent:\nPredicted Classification for TRAIN")
+pl.ylabel("Grade 1")
+pl.xlabel("Grade 2")
+pl.plot(Xtrain[pos,1], Xtrain[pos,2], 'o', color='red')
+pl.plot(Xtrain[neg,1], Xtrain[neg,2], 'o', color='green')
+pl.plot(Xtrain[notequaltrain,1], Xtrain[notequaltrain,2], 'x', color='yellow')
+
+# Ploting the Classification of TEST dataset:
 pos = (np.round(y_hat_test)==1).ravel()
 neg = (np.round(y_hat_test)==0).ravel()
-notequal = (np.round(y_hat_test) != ytest).ravel()
-pl.plot(Xtest[pos,1], Xtest[pos,2], 'o', color='grey')
+pl.figure(num=2, figsize=(7,7))
+pl.get_current_fig_manager().window.wm_geometry("+850+50")
+pl.title("Logistic Regression with Gradient Descendent:\nPredicted Classification for TEST")
+pl.ylabel("Grade 1")
+pl.xlabel("Grade 2")
+pl.plot(Xtest[pos,1], Xtest[pos,2], 'o', color='red')
 pl.plot(Xtest[neg,1], Xtest[neg,2], 'o', color='green')
-pl.plot(Xtest[notequal,1], Xtest[notequal,2], 'x', color='yellow')
+pl.plot(Xtest[notequaltest,1], Xtest[notequaltest,2], 'x', color='yellow')
 pl.show()
