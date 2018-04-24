@@ -18,7 +18,7 @@
       * X shape: (100, 2) rows/cols
       * y shape: (100, 1) rows/cols
 
-[6] : Data New Dimensions:
+[6] : Data New Dimensions (changes in cases we remove some feature):
       * 100 samples.
       * 2 features.
 

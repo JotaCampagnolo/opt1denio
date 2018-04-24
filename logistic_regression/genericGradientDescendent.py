@@ -45,7 +45,7 @@ print("      * y shape:", y.shape, "rows/cols\n")
 # Recollecting INPUT DATA dimensions:
 m = X.shape[0] # Samples Amount.
 d = X.shape[1] # Features Amount.
-print("[6] : Data New Dimensions:")
+print("[6] : Data New Dimensions (changes in cases we remove some feature):")
 print("      *", m, "samples.")
 print("      *", d, "features.\n")
 
