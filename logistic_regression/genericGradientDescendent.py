@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 
 # Program Start PRINT:
-print("[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!\n")
+print("[0] : The LOGISTIC REGRESSION using GRADIENT DESCENDENT has started!\n")
 
 # Program Definitions:
 LABELS = 1  # Labels Amount.

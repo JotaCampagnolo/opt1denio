@@ -1,4 +1,4 @@
-[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!
+[0] : The LOGISTIC REGRESSION using GRADIENT DESCENDENT has started!
 
 [1] : Program Definitions:
       * Labels Amount: 1
