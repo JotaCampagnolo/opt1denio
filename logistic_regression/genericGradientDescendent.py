@@ -87,13 +87,12 @@ def get_y_hat(X, Theta):
 
 # Defining Signoid function:
 def signoid(X, Theta):
-    return np.round(1 / (1 + (np.e**(-X.dot(Theta.T)))))
+    return 1 / (1 + (np.e**(-X.dot(Theta.T))))
 
 # Defining the Cost Function:
 def costFunction(X, y, Theta):
     m = X.shape[0] # Amount of Samples in this Dataset.
-    y_hat = signoid(X, Theta)
-    cost = np.sum(y * np.log(y_hat) + (1 - y) * np.log(y_hat))
+    cost = np.sum((y * np.log(signoid(X, Theta))) + ((1 - y) * np.log(signoid(X, Theta))))
     return -cost/m
 
 # Defining the Gradient Descendent function:
@@ -141,7 +140,13 @@ print()
 
 # Print the RMSE Cost:
 print("[C] : RMSE Final Cost:")
-print("      *", RMSE(ytest, y_hat_test))
+print("      *", RMSE(ytest, y_hat_test), "\n")
+
+# Print the Predictions:
+print("[P] : Predictions:")
+print(np.round(y_hat_test), "\n")
+print(ytest, "\n")
+print(np.array_equal(np.round(y_hat_test), ytest))
 
 # Ploting the Classification:
 pos = (np.round(y_hat_train)==1).ravel()
