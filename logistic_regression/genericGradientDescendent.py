@@ -8,7 +8,7 @@ print("[0] : The LINEAR REGRESSION using GRADIENT DESCENDENT has started!\n")
 # Program Definitions:
 LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
-PRINT_GD = True # Print the Gradient Descendent steps?
+PRINT_GD = False # Print the Gradient Descendent steps?
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
@@ -55,7 +55,7 @@ for i in range(0, len(Theta[0])):
     print("      * Theta", i, "inicialized as", Theta[0][i])
 print()
 
-# Discretizing DATA features:
+# Normalizing DATA features:
 den = np.max(X,0) - np.min(X,0)
 X = X - np.min(X,0)
 DX = X / den
@@ -87,13 +87,13 @@ def get_y_hat(X, Theta):
 
 # Defining Signoid function:
 def signoid(X, Theta):
-    return 1 / (1 + (np.e**(-X.dot(Theta.T))))
+    return 1 / (1 + (np.e**(-get_y_hat(X, Theta))))
 
 # Defining the Cost Function:
 def costFunction(X, y, Theta):
     m = X.shape[0] # Amount of Samples in this Dataset.
-    cost = np.sum((y * np.log(signoid(X, Theta))) + ((1 - y) * np.log(signoid(X, Theta))))
-    return -cost/m
+    cost = np.sum((-y * np.log(signoid(X, Theta))) - ((1 - y) * np.log(1 - signoid(X, Theta))))
+    return cost/m
 
 # Defining the Gradient Descendent function:
 def gradientDescendent(X, y, Theta, alpha, iters):
@@ -144,13 +144,17 @@ print("      *", RMSE(ytest, y_hat_test), "\n")
 
 # Print the Predictions:
 print("[P] : Predictions:")
-print(np.round(y_hat_test), "\n")
-print(ytest, "\n")
-print(np.array_equal(np.round(y_hat_test), ytest))
+print("      * Prediction Accuracy: " + str(np.mean(np.round(y_hat_test)==ytest)*100) + "%")
+parrays = np.column_stack((np.round(y_hat_test),ytest))
+for i in range(0, len(parrays)):
+    print("      *", i+1, "samples:", parrays[i])
+
 
 # Ploting the Classification:
-pos = (np.round(y_hat_train)==1).ravel()
-neg = (np.round(y_hat_train)==0).ravel()
-pl.plot(Xtrain[pos,1], Xtrain[pos,2], 'x', color='red')
-pl.plot(Xtrain[neg,1], Xtrain[neg,2], 'o', color='blue')
+pos = (np.round(y_hat_test)==1).ravel()
+neg = (np.round(y_hat_test)==0).ravel()
+notequal = (np.round(y_hat_test) != ytest).ravel()
+pl.plot(Xtest[pos,1], Xtest[pos,2], 'o', color='grey')
+pl.plot(Xtest[neg,1], Xtest[neg,2], 'o', color='green')
+pl.plot(Xtest[notequal,1], Xtest[notequal,2], 'x', color='yellow')
 pl.show()
