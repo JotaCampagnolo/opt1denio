@@ -1,7 +1,6 @@
 # Imports:
 import numpy as np
 import matplotlib.pyplot as pl
-import random
 
 # Program Start PRINT:
 print("[0] : The LOGISTIC REGRESSION using GRADIENT DESCENDENT has started!\n")
@@ -9,22 +8,21 @@ print("[0] : The LOGISTIC REGRESSION using GRADIENT DESCENDENT has started!\n")
 # Program Definitions:
 LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
-PRINT_GD = False # Print the Gradient Descendent steps?
-PRINT_PS = False # Print the Predictions Samples comparation?
+PRINT_GD = True # Print the Gradient Descendent steps?
+PRINT_PS = True # Print the Predictions Samples comparation?
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
 print("      * Print Gradient Descendent:", PRINT_GD, "%\n")
 
 # Openning INPUT FILE:
-inputFILE = open('skin.txt')
+inputFILE = open('admission_input.txt')
 inputDATA = inputFILE.readlines()
-random.shuffle(inputDATA) # This shuffles the DATASET.
 print("[2] : Input FILE was successfully oppened!\n")
 
 # Collecting INPUT DATA dimensions:
 m = len(inputDATA) # Samples Amount.
-d = (np.array([line.split('\t')[:] for line in inputDATA]).shape[1]) - LABELS # Features Amount.
+d = (np.array([line.split(',')[:] for line in inputDATA]).shape[1]) - LABELS # Features Amount.
 print("[3] : Data Dimensions:")
 print("      *", m, "samples.")
 print("      *", d, "features.\n")
@@ -35,9 +33,8 @@ print("[4] : Definition of Train Samples Size:")
 print("      *", TRAIN_SAMPLES, "samples\n")
 
 # Instanciation of DATA matrices:
-X = np.array([line.split('\t')[0:d] for line in inputDATA], dtype = float)
-y = np.array([line.split('\t')[d:(d+1)] for line in inputDATA], dtype = float)
-y[y==2] = 0
+X = np.array([line.split(',')[0:d] for line in inputDATA], dtype = float)
+y = np.array([line.split(',')[d:(d+1)] for line in inputDATA], dtype = float)
 print("[5] : Data Matrices:")
 print("      * X shape:", X.shape, "rows/cols")
 print("      * y shape:", y.shape, "rows/cols\n")
@@ -60,7 +57,9 @@ for i in range(0, len(Theta[0])):
 print()
 
 # Normalizing DATA features:
-DX = (X - np.mean(X,0)) / np.std(X,0)
+den = np.max(X,0) - np.min(X,0)
+X = X - np.min(X,0)
+DX = X / den
 print("[8] : The X matrix was normalized with:")
 print("      * MAX value:", np.max(DX))
 print("      * MIN value:", np.min(DX))
@@ -144,8 +143,7 @@ print()
 
 # Print the RMSE Cost:
 print("[C] : RMSE Final Cost:")
-print("      * Train:", RMSE(ytrain, y_hat_train), "\n")
-print("      * Test:", RMSE(ytest, y_hat_test), "\n")
+print("      *", RMSE(ytest, y_hat_test), "\n")
 
 # Print the Predictions of TRAIN dataset:
 print("[P] : Train Predictions:")
@@ -171,15 +169,6 @@ if PRINT_PS:
         else:
             wrongstr = ""
         print("      *", i+1, "samples:", parrays[i], wrongstr)
-print()
-
-# Print zeros and ones amount:
-print("[Z] : Train Zeros and Ones:")
-print("      * Zeros:", np.count_nonzero(np.round(y_hat_train)==0))
-print("      * Ones:", np.count_nonzero(np.round(y_hat_train)==1))
-print("[Z] : Test Zeros and Ones:")
-print("      * Zeros:", np.count_nonzero(np.round(y_hat_test)==0))
-print("      * Ones:", np.count_nonzero(np.round(y_hat_test)==1))
 
 
 # Ploting the Classification of TRAIN dataset:
