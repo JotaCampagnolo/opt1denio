@@ -3,9 +3,12 @@
 [1] : Program Definitions:
       * Labels Amount: 1
       * Train Size: 70.0 %
-      * Print Gradient Descendent: False %
+      * Print Gradient Descendent: False
+      * Print Predictions Samples Comparation: False
+      * Plot the Graphics: False 
 
 [2] : Input FILE was successfully oppened!
+      * The inputDATA was successfully shuffled.
 
 [3] : Data Dimensions:
       * 245057 samples.
@@ -29,8 +32,8 @@
       * Theta 3 inicialized as 0.0
 
 [8] : The X matrix was normalized with:
-      * MAX value: 2.0871168057042766
-      * MIN value: -2.2106264718781374
+      * MAX value: 2.0871168057042615
+      * MIN value: -2.2106264718781548
 
 [9] : Data Matrices after Theta 0 column:
       * X shape: (245057, 4) rows/cols
@@ -44,29 +47,53 @@
 
 [G] : Starting Gradient Descendent Function:
 
+[[-0.]
+ [ 0.]
+ [-0.]
+ ...
+ [ 0.]
+ [-0.]
+ [ 0.]]
+39144 132162
+[[ 0.]
+ [-0.]
+ [-0.]
+ ...
+ [-0.]
+ [ 1.]
+ [ 0.]]
+16757 56662
 [T] : Final Theta Values:
-      * The Theta 0 found is 0.20747077446778348
-      * The Theta 1 found is -0.19995202051287747
-      * The Theta 2 found is -0.00017895605566489937
-      * The Theta 3 found is 0.33061467065633016
+      * The Theta 0 found is 0.2072543522437026
+      * The Theta 1 found is -0.19779238022072992
+      * The Theta 2 found is -0.0011098815153916454
+      * The Theta 3 found is 0.3295428682630947
 
 [C] : Final Cost:
-      * Train Dataset 0.6854077424492271
-      * Test Dataset 0.6855822032038834
-
-[C] : RMSE Final Cost:
-      * Train: 0.28233291836315455 
-
-      * Test: 0.28614453912528737 
+      * Train Dataset 0.6858268716086854
+      * Test Dataset 0.6853110980021232
 
 [P] : Train Predictions:
-      * Prediction Accuracy: 92.46643620401191%
+      * Prediction Accuracy: 92.36266971359282%
 [P] : Test Predictions:
-      * Prediction Accuracy: 92.20054952528632%
+      * Prediction Accuracy: 92.40322097989608%
 
 [Z] : Train Zeros and Ones:
-      * Zeros: 132277
-      * Ones: 39019
+      * Zeros: 132162
+      * Ones: 39144
 [Z] : Test Zeros and Ones:
-      * Zeros: 56478
-      * Ones: 16951
+      * Zeros: 56662
+      * Ones: 16757
+
+[M] : Classification Metrics Results for Train DATASET:
+      * Precision: 0.7900827713059473
+      * Recall: 0.19519938398616493
+      * Accuracy: 0.20768682941636604
+      * F1-Score: 0.31305483293012515 
+
+[M] : Classification Metrics Results for Test DATASET:
+      * Precision: 0.7922659187205348
+      * Recall: 0.19542784802673221
+      * Accuracy: 0.20813413421593865
+      * F1-Score: 0.3135198960916283 
+

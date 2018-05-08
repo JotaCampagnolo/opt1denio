@@ -11,16 +11,20 @@ LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
 PRINT_GD = False # Print the Gradient Descendent steps?
 PRINT_PS = False # Print the Predictions Samples comparation?
+PLOT_GR = False # Plot the graphs of model results.
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
-print("      * Print Gradient Descendent:", PRINT_GD, "%\n")
+print("      * Print Gradient Descendent:", PRINT_GD)
+print("      * Print Predictions Samples Comparation:", PRINT_PS)
+print("      * Plot the Graphics:", PLOT_GR, "\n")
 
 # Openning INPUT FILE:
 inputFILE = open('skin.txt')
 inputDATA = inputFILE.readlines()
-random.shuffle(inputDATA) # This shuffles the DATASET.
-print("[2] : Input FILE was successfully oppened!\n")
+np.random.shuffle(inputDATA) # This shuffles the DATASET.
+print("[2] : Input FILE was successfully oppened!")
+print("      * The inputDATA was successfully shuffled.\n")
 
 # Collecting INPUT DATA dimensions:
 m = len(inputDATA) # Samples Amount.
@@ -114,19 +118,30 @@ def gradientDescendent(X, y, Theta, alpha, iters):
     print()
     return Theta, J[1:]
 
-# Defining MSE function:
-def MSE(y, y_hat):
-    m = y.shape[0]
-    return np.sum((y_hat - y)**2) / m
+# Definition of Confusion Matrix Metrics:
+def classMetrics(y_hat, y):
+    CF = [] # TP, FP, TN, FN
+    y_P = set(np.where(y==1)[0])
+    y_N = set(np.where(y==0)[0])
+    y_hat_P = set(np.where(y_hat==1)[0])
+    y_hat_N = set(np.where(y_hat==0)[0])
+    CF.append(len(y_P.intersection(y_hat_P)))
+    CF.append(len(y_hat_P) - CF[0])
+    CF.append(len(y_N.intersection(y_hat_N)))
+    CF.append(len(y_hat_N) - CF[2])
+    precision = CF[0] / (CF[0]+CF[1])
+    recall = CF[0] / (CF[0]+CF[2])
+    accuracy = (CF[0]+CF[3]) / (CF[0]+CF[1]+CF[2]+CF[3])
+    f1 = (2*recall*precision) / (recall+precision)
+    return precision, recall, accuracy, f1
 
-# Defining RMSE function:
-def RMSE(y, y_hat):
-    return np.sqrt(MSE(y, y_hat))
 
 # MAIN is from here to the end:
 finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.001, 10000)
 y_hat_train = get_y_hat(Xtrain, finalTheta)
 y_hat_test = get_y_hat(Xtest, finalTheta)
+train_precision, train_recall, train_accuracy, train_f1 = classMetrics(np.round(y_hat_train), ytrain)
+test_precision, test_recall, test_accuracy, test_f1 = classMetrics(np.round(y_hat_test), ytest)
 notequaltrain = (np.round(y_hat_train) != ytrain).ravel()
 notequaltest = (np.round(y_hat_test) != ytest).ravel()
 
@@ -141,11 +156,6 @@ print("[C] : Final Cost:")
 print("      * Train Dataset", costFunction(Xtrain, ytrain, finalTheta))
 print("      * Test Dataset", costFunction(Xtest, ytest, finalTheta))
 print()
-
-# Print the RMSE Cost:
-print("[C] : RMSE Final Cost:")
-print("      * Train:", RMSE(ytrain, y_hat_train), "\n")
-print("      * Test:", RMSE(ytest, y_hat_test), "\n")
 
 # Print the Predictions of TRAIN dataset:
 print("[P] : Train Predictions:")
@@ -180,7 +190,19 @@ print("      * Ones:", np.count_nonzero(np.round(y_hat_train)==1))
 print("[Z] : Test Zeros and Ones:")
 print("      * Zeros:", np.count_nonzero(np.round(y_hat_test)==0))
 print("      * Ones:", np.count_nonzero(np.round(y_hat_test)==1))
+print()
 
+# Print the Classification Metrics:
+print("[M] : Classification Metrics Results for Train DATASET:")
+print("      * Precision:", train_precision)
+print("      * Recall:", train_recall)
+print("      * Accuracy:", train_accuracy)
+print("      * F1-Score:", train_f1, "\n")
+print("[M] : Classification Metrics Results for Test DATASET:")
+print("      * Precision:", test_precision)
+print("      * Recall:", test_recall)
+print("      * Accuracy:", test_accuracy)
+print("      * F1-Score:", test_f1, "\n")
 
 # Ploting the Classification of TRAIN dataset:
 pos = (np.round(y_hat_train)==1).ravel()
