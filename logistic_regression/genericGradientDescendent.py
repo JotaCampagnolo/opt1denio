@@ -159,6 +159,7 @@ def printMetrics(dataName, y, y_hat, CF, recall, precision, accuracy, f1):
                 wrongstr = ""
             print("      *", i+1, "samples:", parrays[i], wrongstr)
         print()
+    print()
     return
 
 # MAIN is from here to the end:
@@ -182,55 +183,6 @@ print("      * Train Dataset", costFunction(Xtrain, ytrain, finalTheta))
 print("      * Test Dataset", costFunction(Xtest, ytest, finalTheta))
 print()
 
-# Print the Predictions and Metrics of TRAIN dataset:
-print("[P] : Train Predictions:")
-print("      * Confusion Matrix:")
-print("             +----------------+----------------+")
-print("             | TP: " + "{0: >#010d}".format(int(train_CF[0])) + " | FP: " + "{0: >#010d}".format(int(train_CF[1])) + " |")
-print("             +----------------+----------------+")
-print("             | TN: " + "{0: >#010d}".format(int(train_CF[2])) + " | FN: " + "{0: >#010d}".format(int(train_CF[3])) + " |")
-print("             +----------------+----------------+")
-print("      * Recall: " + str(train_recall*100) + "%")
-print("      * Precision: " + str(train_precision*100) + "%")
-print("      * Accuracy: " + str(train_accuracy*100) + "%")
-print("      * F1-Score: " + str(train_f1*100) + "%")
-if PRINT_PS:
-    parrays = np.column_stack((np.round(y_hat_train),ytrain))
-    for i in range(0, len(parrays)):
-        if notequaltrain[i]:
-            wrongstr = "*"
-        else:
-            wrongstr = ""
-        print("      *", i+1, "samples:", parrays[i], wrongstr)
-    print()
-
-# Print the Predictions and Metrics of TEST dataset:
-print("[P] : Test Predictions:")
-print("      * Confusion Matrix:")
-print("             +----------------+----------------+")
-print("             | TP: " + "{0: >#010d}".format(int(test_CF[0])) + " | FP: " + "{0: >#010d}".format(int(test_CF[1])) + " |")
-print("             +----------------+----------------+")
-print("             | TN: " + "{0: >#010d}".format(int(test_CF[2])) + " | FN: " + "{0: >#010d}".format(int(test_CF[3])) + " |")
-print("             +----------------+----------------+")
-print("      * Recall: " + str(test_recall*100) + "%")
-print("      * Precision: " + str(test_precision*100) + "%")
-print("      * Accuracy: " + str(test_accuracy*100) + "%")
-print("      * F1-Score: " + str(test_f1*100) + "%")
-if PRINT_PS:
-    parrays = np.column_stack((np.round(y_hat_test),ytest))
-    for i in range(0, len(parrays)):
-        if notequaltest[i]:
-            wrongstr = "*"
-        else:
-            wrongstr = ""
-        print("      *", i+1, "samples:", parrays[i], wrongstr)
-print()
-
-# Print zeros and ones amount:
-print("[Z] : Train Zeros and Ones:")
-print("      * Zeros:", np.count_nonzero(np.round(y_hat_train)==0))
-print("      * Ones:", np.count_nonzero(np.round(y_hat_train)==1))
-print("[Z] : Test Zeros and Ones:")
-print("      * Zeros:", np.count_nonzero(np.round(y_hat_test)==0))
-print("      * Ones:", np.count_nonzero(np.round(y_hat_test)==1))
-print()
+# Print the Predictions and Metrics of model:
+printMetrics("TRAIN", ytrain, y_hat_train_r, train_CF, train_recall, train_precision, train_accuracy, train_f1)
+printMetrics("TRAIN", ytest, y_hat_test_r, test_CF, test_recall, test_precision, test_accuracy, test_f1)
