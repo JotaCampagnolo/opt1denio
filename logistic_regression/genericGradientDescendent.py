@@ -11,18 +11,19 @@ LABELS = 1  # Labels Amount.
 TRAIN_SIZE = 0.7 # Percentage of DATA SAMPLES that will be used to train.
 PRINT_GD = False # Print the Gradient Descendent steps?
 PRINT_PS = False # Print the Predictions Samples comparation?
-PLOT_GR = False # Plot the graphs of model results.
+SHUFFLE_DATA = True # Enable to shuffle all the DATASET.
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
 print("      * Print Gradient Descendent:", PRINT_GD)
 print("      * Print Predictions Samples Comparation:", PRINT_PS)
-print("      * Plot the Graphics:", PLOT_GR, "\n")
+print("      * Shuffle DATASET:", SHUFFLE_DATA, "\n")
 
-# Openning INPUT FILE:
+# Openning INPUT DATA FILE:
 inputFILE = open('skin.txt')
 inputDATA = inputFILE.readlines()
-np.random.shuffle(inputDATA) # This shuffles the DATASET.
+if SHUFFLE_DATA:
+    np.random.shuffle(inputDATA) # This shuffles the DATASET.
 print("[2] : Input FILE was successfully oppened!")
 print("      * The inputDATA was successfully shuffled.\n")
 
@@ -41,7 +42,7 @@ print("      *", TRAIN_SAMPLES, "samples\n")
 # Instanciation of DATA matrices:
 X = np.array([line.split('\t')[0:d] for line in inputDATA], dtype = float)
 y = np.array([line.split('\t')[d:(d+1)] for line in inputDATA], dtype = float)
-y[y==2] = 0
+y[y==2] = 0 # Changes Class 2 to Class 0.
 print("[5] : Data Matrices:")
 print("      * X shape:", X.shape, "rows/cols")
 print("      * y shape:", y.shape, "rows/cols\n")
@@ -78,8 +79,8 @@ print("      * y shape:", y.shape, "rows/cols\n")
 
 # Separating Train and Test Data:
 Xtrain = DX[:TRAIN_SAMPLES]
-Xtest = DX[TRAIN_SAMPLES:]
 ytrain = y[:TRAIN_SAMPLES]
+Xtest = DX[TRAIN_SAMPLES:]
 ytest = y[TRAIN_SAMPLES:]
 print("[10] : Train and Test Data Matrices:")
 print("      * Xtrain shape:", Xtrain.shape, "rows/cols")
@@ -133,17 +134,41 @@ def classMetrics(y_hat, y):
     recall = CF[0] / (CF[0]+CF[2])
     accuracy = (CF[0]+CF[3]) / (CF[0]+CF[1]+CF[2]+CF[3])
     f1 = (2*recall*precision) / (recall+precision)
-    return precision, recall, accuracy, f1
+    return CF, precision, recall, accuracy, f1
 
+# Definition of Print Metrics function:
+def printMetrics(dataName, y, y_hat, CF, recall, precision, accuracy, f1):
+    notequal = (y_hat != y).ravel() # This is the position of wrong predictions.
+    print("[P] :", dataName, "Predictions:")
+    print("      * Confusion Matrix:")
+    print("             +----------------+----------------+")
+    print("             | TP: " + "{0: >#010d}".format(int(CF[0])) + " | FP: " + "{0: >#010d}".format(int(CF[1])) + " |")
+    print("             +----------------+----------------+")
+    print("             | TN: " + "{0: >#010d}".format(int(CF[2])) + " | FN: " + "{0: >#010d}".format(int(CF[3])) + " |")
+    print("             +----------------+----------------+")
+    print("      * Recall: " + str(recall*100) + "%")
+    print("      * Precision: " + str(precision*100) + "%")
+    print("      * Accuracy: " + str(accuracy*100) + "%")
+    print("      * F1-Score: " + str(f1*100) + "%")
+    if PRINT_PS:
+        parrays = np.column_stack((y_hat, y))
+        for i in range(0, len(parrays)):
+            if notequal[i]:
+                wrongstr = "*"
+            else:
+                wrongstr = ""
+            print("      *", i+1, "samples:", parrays[i], wrongstr)
+        print()
+    return
 
 # MAIN is from here to the end:
 finalTheta, finalCost = gradientDescendent(Xtrain, ytrain, Theta, 0.001, 10000)
-y_hat_train = get_y_hat(Xtrain, finalTheta)
-y_hat_test = get_y_hat(Xtest, finalTheta)
-train_precision, train_recall, train_accuracy, train_f1 = classMetrics(np.round(y_hat_train), ytrain)
-test_precision, test_recall, test_accuracy, test_f1 = classMetrics(np.round(y_hat_test), ytest)
-notequaltrain = (np.round(y_hat_train) != ytrain).ravel()
-notequaltest = (np.round(y_hat_test) != ytest).ravel()
+y_hat_train = get_y_hat(Xtrain, finalTheta) # This is the TRAIN prediction real values.
+y_hat_test = get_y_hat(Xtest, finalTheta) # This is the TEST prediction real values.
+y_hat_train_r = np.round(y_hat_train) # This is the TRAIN prediction found classes.
+y_hat_test_r = np.round(y_hat_test) # This is the TEST prediction found classes.
+train_CF, train_precision, train_recall, train_accuracy, train_f1 = classMetrics(y_hat_train_r, ytrain)
+test_CF, test_precision, test_recall, test_accuracy, test_f1 = classMetrics(y_hat_test_r, ytest)
 
 # Print the Final Theta Values:
 print("[T] : Final Theta Values:")
@@ -157,27 +182,45 @@ print("      * Train Dataset", costFunction(Xtrain, ytrain, finalTheta))
 print("      * Test Dataset", costFunction(Xtest, ytest, finalTheta))
 print()
 
-# Print the Predictions of TRAIN dataset:
+# Print the Predictions and Metrics of TRAIN dataset:
 print("[P] : Train Predictions:")
-print("      * Prediction Accuracy: " + str(np.mean(np.round(y_hat_train)==ytrain)*100) + "%")
+print("      * Confusion Matrix:")
+print("             +----------------+----------------+")
+print("             | TP: " + "{0: >#010d}".format(int(train_CF[0])) + " | FP: " + "{0: >#010d}".format(int(train_CF[1])) + " |")
+print("             +----------------+----------------+")
+print("             | TN: " + "{0: >#010d}".format(int(train_CF[2])) + " | FN: " + "{0: >#010d}".format(int(train_CF[3])) + " |")
+print("             +----------------+----------------+")
+print("      * Recall: " + str(train_recall*100) + "%")
+print("      * Precision: " + str(train_precision*100) + "%")
+print("      * Accuracy: " + str(train_accuracy*100) + "%")
+print("      * F1-Score: " + str(train_f1*100) + "%")
 if PRINT_PS:
     parrays = np.column_stack((np.round(y_hat_train),ytrain))
     for i in range(0, len(parrays)):
         if notequaltrain[i]:
-            wrongstr = "<-- Wrong Prediction"
+            wrongstr = "*"
         else:
             wrongstr = ""
         print("      *", i+1, "samples:", parrays[i], wrongstr)
     print()
 
-# Print the Predictions of TEST dataset:
+# Print the Predictions and Metrics of TEST dataset:
 print("[P] : Test Predictions:")
-print("      * Prediction Accuracy: " + str(np.mean(np.round(y_hat_test)==ytest)*100) + "%")
+print("      * Confusion Matrix:")
+print("             +----------------+----------------+")
+print("             | TP: " + "{0: >#010d}".format(int(test_CF[0])) + " | FP: " + "{0: >#010d}".format(int(test_CF[1])) + " |")
+print("             +----------------+----------------+")
+print("             | TN: " + "{0: >#010d}".format(int(test_CF[2])) + " | FN: " + "{0: >#010d}".format(int(test_CF[3])) + " |")
+print("             +----------------+----------------+")
+print("      * Recall: " + str(test_recall*100) + "%")
+print("      * Precision: " + str(test_precision*100) + "%")
+print("      * Accuracy: " + str(test_accuracy*100) + "%")
+print("      * F1-Score: " + str(test_f1*100) + "%")
 if PRINT_PS:
     parrays = np.column_stack((np.round(y_hat_test),ytest))
     for i in range(0, len(parrays)):
         if notequaltest[i]:
-            wrongstr = "<-- Wrong Prediction"
+            wrongstr = "*"
         else:
             wrongstr = ""
         print("      *", i+1, "samples:", parrays[i], wrongstr)
@@ -191,40 +234,3 @@ print("[Z] : Test Zeros and Ones:")
 print("      * Zeros:", np.count_nonzero(np.round(y_hat_test)==0))
 print("      * Ones:", np.count_nonzero(np.round(y_hat_test)==1))
 print()
-
-# Print the Classification Metrics:
-print("[M] : Classification Metrics Results for Train DATASET:")
-print("      * Precision:", train_precision)
-print("      * Recall:", train_recall)
-print("      * Accuracy:", train_accuracy)
-print("      * F1-Score:", train_f1, "\n")
-print("[M] : Classification Metrics Results for Test DATASET:")
-print("      * Precision:", test_precision)
-print("      * Recall:", test_recall)
-print("      * Accuracy:", test_accuracy)
-print("      * F1-Score:", test_f1, "\n")
-
-# Ploting the Classification of TRAIN dataset:
-pos = (np.round(y_hat_train)==1).ravel()
-neg = (np.round(y_hat_train)==0).ravel()
-pl.figure(num=1, figsize=(7,7))
-pl.get_current_fig_manager().window.wm_geometry("+50+50")
-pl.title("Logistic Regression with Gradient Descendent:\nPredicted Classification for TRAIN")
-pl.ylabel("Grade 1")
-pl.xlabel("Grade 2")
-pl.plot(Xtrain[pos,1], Xtrain[pos,2], 'o', color='red')
-pl.plot(Xtrain[neg,1], Xtrain[neg,2], 'o', color='green')
-pl.plot(Xtrain[notequaltrain,1], Xtrain[notequaltrain,2], 'x', color='yellow')
-
-# Ploting the Classification of TEST dataset:
-pos = (np.round(y_hat_test)==1).ravel()
-neg = (np.round(y_hat_test)==0).ravel()
-pl.figure(num=2, figsize=(7,7))
-pl.get_current_fig_manager().window.wm_geometry("+850+50")
-pl.title("Logistic Regression with Gradient Descendent:\nPredicted Classification for TEST")
-pl.ylabel("Grade 1")
-pl.xlabel("Grade 2")
-pl.plot(Xtest[pos,1], Xtest[pos,2], 'o', color='red')
-pl.plot(Xtest[neg,1], Xtest[neg,2], 'o', color='green')
-pl.plot(Xtest[notequaltest,1], Xtest[notequaltest,2], 'x', color='yellow')
-pl.show()
