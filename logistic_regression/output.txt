@@ -5,7 +5,7 @@
       * Train Size: 70.0 %
       * Print Gradient Descendent: False
       * Print Predictions Samples Comparation: False
-      * Plot the Graphics: False 
+      * Shuffle DATASET: True 
 
 [2] : Input FILE was successfully oppened!
       * The inputDATA was successfully shuffled.
@@ -32,8 +32,8 @@
       * Theta 3 inicialized as 0.0
 
 [8] : The X matrix was normalized with:
-      * MAX value: 2.0871168057042615
-      * MIN value: -2.2106264718781548
+      * MAX value: 2.0871168057042713
+      * MIN value: -2.2106264718781437
 
 [9] : Data Matrices after Theta 0 column:
       * X shape: (245057, 4) rows/cols
@@ -47,53 +47,37 @@
 
 [G] : Starting Gradient Descendent Function:
 
-[[-0.]
- [ 0.]
- [-0.]
- ...
- [ 0.]
- [-0.]
- [ 0.]]
-39144 132162
-[[ 0.]
- [-0.]
- [-0.]
- ...
- [-0.]
- [ 1.]
- [ 0.]]
-16757 56662
 [T] : Final Theta Values:
-      * The Theta 0 found is 0.2072543522437026
-      * The Theta 1 found is -0.19779238022072992
-      * The Theta 2 found is -0.0011098815153916454
-      * The Theta 3 found is 0.3295428682630947
+      * The Theta 0 found is 0.20746147540254736
+      * The Theta 1 found is -0.19790331318918716
+      * The Theta 2 found is -0.0016004654982887017
+      * The Theta 3 found is 0.32996156373352586
 
 [C] : Final Cost:
-      * Train Dataset 0.6858268716086854
-      * Test Dataset 0.6853110980021232
+      * Train Dataset 0.6857739589064915
+      * Test Dataset 0.6854756506144976
 
-[P] : Train Predictions:
-      * Prediction Accuracy: 92.36266971359282%
-[P] : Test Predictions:
-      * Prediction Accuracy: 92.40322097989608%
+[P] : TRAIN Predictions:
+      * Confusion Matrix:
+             +----------------+----------------+
+             | TP:      30900 | FP:       8189 |
+             +----------------+----------------+
+             | TN:     127593 | FN:       4628 |
+             +----------------+----------------+
+      * Recall: 19.4961291665878%
+      * Precision: 79.05037222748088%
+      * Accuracy: 20.73901114937832%
+      * F1-Score: 31.27815286817625%
 
-[Z] : Train Zeros and Ones:
-      * Zeros: 132162
-      * Ones: 39144
-[Z] : Test Zeros and Ones:
-      * Zeros: 56662
-      * Ones: 16757
-
-[M] : Classification Metrics Results for Train DATASET:
-      * Precision: 0.7900827713059473
-      * Recall: 0.19519938398616493
-      * Accuracy: 0.20768682941636604
-      * F1-Score: 0.31305483293012515 
-
-[M] : Classification Metrics Results for Test DATASET:
-      * Precision: 0.7922659187205348
-      * Recall: 0.19542784802673221
-      * Accuracy: 0.20813413421593865
-      * F1-Score: 0.3135198960916283 
+[P] : TRAIN Predictions:
+      * Confusion Matrix:
+             +----------------+----------------+
+             | TP:      13326 | FP:       3513 |
+             +----------------+----------------+
+             | TN:      54571 | FN:       2005 |
+             +----------------+----------------+
+      * Recall: 19.626787634210643%
+      * Precision: 79.13771601639053%
+      * Accuracy: 20.882653408703945%
+      * F1-Score: 31.4529833836858%
 

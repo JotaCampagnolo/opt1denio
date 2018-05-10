@@ -146,10 +146,10 @@ def printMetrics(dataName, y, y_hat, CF, recall, precision, accuracy, f1):
     print("             +----------------+----------------+")
     print("             | TN: " + "{0: >#010d}".format(int(CF[2])) + " | FN: " + "{0: >#010d}".format(int(CF[3])) + " |")
     print("             +----------------+----------------+")
-    print("      * Recall: " + str(recall*100) + "%")
-    print("      * Precision: " + str(precision*100) + "%")
-    print("      * Accuracy: " + str(accuracy*100) + "%")
-    print("      * F1-Score: " + str(f1*100) + "%")
+    print("      * Recall: " + str(recall*100) + " %")
+    print("      * Precision: " + str(precision*100) + " %")
+    print("      * Accuracy: " + str(accuracy*100) + " %")
+    print("      * F1-Score: " + str(f1*100) + " %")
     if PRINT_PS:
         parrays = np.column_stack((y_hat, y))
         for i in range(0, len(parrays)):
