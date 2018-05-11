@@ -131,8 +131,8 @@ def classMetrics(y_hat, y):
     CF.append(len(y_N.intersection(y_hat_N)))
     CF.append(len(y_hat_N) - CF[2])
     precision = CF[0] / (CF[0]+CF[1])
-    recall = CF[0] / (CF[0]+CF[2])
-    accuracy = (CF[0]+CF[3]) / (CF[0]+CF[1]+CF[2]+CF[3])
+    recall = CF[0] / (CF[0]+CF[3])
+    accuracy = (CF[0]+CF[2]) / (CF[0]+CF[1]+CF[2]+CF[3])
     f1 = (2*recall*precision) / (recall+precision)
     return CF, precision, recall, accuracy, f1
 
@@ -185,4 +185,4 @@ print()
 
 # Print the Predictions and Metrics of model:
 printMetrics("TRAIN", ytrain, y_hat_train_r, train_CF, train_recall, train_precision, train_accuracy, train_f1)
-printMetrics("TRAIN", ytest, y_hat_test_r, test_CF, test_recall, test_precision, test_accuracy, test_f1)
+printMetrics("TEST", ytest, y_hat_test_r, test_CF, test_recall, test_precision, test_accuracy, test_f1)
