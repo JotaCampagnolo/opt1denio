@@ -32,8 +32,8 @@
       * Theta 3 inicialized as 0.0
 
 [8] : The X matrix was normalized with:
-      * MAX value: 2.0871168057042824
-      * MIN value: -2.210626471878162
+      * MAX value: 2.0871168057042673
+      * MIN value: -2.210626471878151
 
 [9] : Data Matrices after Theta 0 column:
       * X shape: (245057, 4) rows/cols
@@ -48,36 +48,36 @@
 [G] : Starting Gradient Descendent Function:
 
 [T] : Final Theta Values:
-      * The Theta 0 found is 0.207868124545275
-      * The Theta 1 found is -0.19806385088922018
-      * The Theta 2 found is -0.0018387738966768531
-      * The Theta 3 found is 0.33072803032281595
+      * The Theta 0 found is 0.20770157743900514
+      * The Theta 1 found is -0.1967239104492531
+      * The Theta 2 found is -0.002473048483006745
+      * The Theta 3 found is 0.3300502205545172
 
 [C] : Final Cost:
-      * Train Dataset 0.6854673947460327
-      * Test Dataset 0.6862205120378324
+      * Train Dataset 0.6857651081159828
+      * Test Dataset 0.6859423639840355
 
 [P] : TRAIN Predictions:
       * Confusion Matrix:
              +----------------+----------------+
-             | TP:      31072 | FP:       8197 |
+             | TP:      30949 | FP:       8203 |
              +----------------+----------------+
-             | TN:     127383 | FN:       4656 |
+             | TN:     127473 | FN:       4672 |
              +----------------+----------------+
-      * Recall: 86.96820420958352 %
-      * Precision: 79.12602816471008 %
-      * Accuracy: 20.85600205477853 %
-      * F1-Score: 82.8619811459125 %
+      * Recall: 86.88414137727744 %
+      * Precision: 79.04832447895383 %
+      * Accuracy: 92.48381466108572 %
+      * F1-Score: 82.78121781926632 %
 
 [P] : TEST Predictions:
       * Confusion Matrix:
              +----------------+----------------+
-             | TP:      13182 | FP:       3524 |
+             | TP:      13270 | FP:       3502 |
              +----------------+----------------+
-             | TN:      54762 | FN:       1949 |
+             | TN:      54688 | FN:       1968 |
              +----------------+----------------+
-      * Recall: 87.11915934174873 %
-      * Precision: 78.90578235364539 %
-      * Accuracy: 20.60966806053094 %
-      * F1-Score: 82.80930992241731 %
+      * Recall: 87.08491928074551 %
+      * Precision: 79.11996184116384 %
+      * Accuracy: 92.55052568502478 %
+      * F1-Score: 82.91159012808497 %
 
