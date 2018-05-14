@@ -1,6 +1,5 @@
 # Imports:
 import numpy as np
-import matplotlib.pyplot as pl
 import random
 
 # Program Start PRINT:
@@ -13,8 +12,6 @@ SHUFFLE_DATA = True # Enable to shuffle all the DATASET.
 print("[1] : Program Definitions:")
 print("      * Labels Amount:", LABELS)
 print("      * Train Size:", TRAIN_SIZE*100, "%")
-print("      * Print Gradient Descendent:", PRINT_GD)
-print("      * Print Predictions Samples Comparation:", PRINT_PS)
 print("      * Shuffle DATASET:", SHUFFLE_DATA, "\n")
 
 # Openning INPUT DATA FILE:
@@ -117,7 +114,7 @@ def gradientDescendent(X, y, Theta, alpha, iters, c):
 
 # MAIN is from here to the end:
 for c in Classes:
-    Theta[c] = gradientDescendent(Xtrain, (ytrain==c)*1, np.array([Theta[c]]), 0.001, 100, c)
+    Theta[c] = gradientDescendent(Xtrain, (ytrain==c)*1, np.array([Theta[c]]), 0.001, 10000, c)
 
 train_y_hat = np.argmax(get_y_hat(Xtrain, Theta), axis=1)
 acc = np.mean(train_y_hat == ytrain.ravel())
