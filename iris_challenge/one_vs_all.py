@@ -122,7 +122,7 @@ def gradientDescendent(X, y, Theta, alpha, iters, c):
 
 # MAIN is from here to the end:
 for c in Classes:
-    Theta[c] = gradientDescendent(Xtrain, (ytrain==c)*1, np.array([Theta[c]]), 0.001, 10000, c)
+    Theta[c] = gradientDescendent(Xtrain, (ytrain==c)*1, np.array([Theta[c]]), 0.001, 50000, c)
 
 train_y_hat = np.argmax(get_y_hat(Xtrain, Theta), axis=1)
 overall_acc = np.mean(train_y_hat == ytrain.ravel())
