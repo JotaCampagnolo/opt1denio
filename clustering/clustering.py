@@ -57,6 +57,7 @@ print(centr)
 
 # Clustering Routine:
 for j in range(10):
+    old_C = C.copy()
     for i in range(m):
         di = np.sum(np.sqrt((X[i,:] - C)**2), 1)
         centr[i] = np.argmin(di)
