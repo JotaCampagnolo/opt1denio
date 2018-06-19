@@ -39,8 +39,9 @@ print("[5] : Data New Dimensions (changes in cases we remove some feature):")
 print("      *", m, "samples.")
 print("      *", d, "features.\n")
 
-X = X / (np.max(X, 0))
-print("[6] : The X matrix was discretized.\n")
+# Normalizing the DATASET:
+X = (X - np.mean(X, 0)) / np.std(X, 0, ddof=1)
+print("[6] : The X matrix was normalized.\n")
 
 # Defining the Clusters Inititialization function:
 def initClusters(amount):
@@ -51,10 +52,10 @@ def initClusters(amount):
     return C
 
 # Defining the Cost function:
-def costFunction(clusters):
-    costs = np.zeros((len(clusters),1))
-    for i in range(m):
-        cost = np.sum(np.sqrt((X[i,:] - clusters)**2), 1)
+def costFunction(X, C):
+    costs = np.zeros((len(C),1))
+    for i in range(X.shape[0]):
+        cost = np.sum(np.sqrt((X[i,:] - C)**2), 1)
         argmin = np.argmin(cost)
         costs[argmin] = costs[argmin] + cost[argmin]
     return np.sum(costs)
